@@ -31,13 +31,19 @@ No modules.
 | <a name="input_disk_encryption_set_id"></a> [disk\_encryption\_set\_id](#input\_disk\_encryption\_set\_id) | ID of the disk encryption set. | `string` | `null` | no |
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | List of DNS servers | `list(string)` | `[]` | no |
 | <a name="input_enable_accelerated_networking"></a> [enable\_accelerated\_networking](#input\_enable\_accelerated\_networking) | Enable accelerated networking | `bool` | `false` | no |
+| <a name="input_enable_diagnostics"></a> [enable\_diagnostics](#input\_enable\_diagnostics) | Enable diagnostic settings for the VM | `bool` | `false` | no |
 | <a name="input_enable_ip_forwarding"></a> [enable\_ip\_forwarding](#input\_enable\_ip\_forwarding) | Whether IP forwarding is enabled | `bool` | `false` | no |
 | <a name="input_encryption_at_host_enabled"></a> [encryption\_at\_host\_enabled](#input\_encryption\_at\_host\_enabled) | Enable encryption at host. | `bool` | `false` | no |
+| <a name="input_excluded_log_categories"></a> [excluded\_log\_categories](#input\_excluded\_log\_categories) | List of log categories to exclude. | `list(string)` | `[]` | no |
 | <a name="input_hotpatching_enabled"></a> [hotpatching\_enabled](#input\_hotpatching\_enabled) | Enable hotpatching on supported images. | `bool` | `false` | no |
 | <a name="input_identity"></a> [identity](#input\_identity) | Configuration for VM identity. | <pre>object({<br>    type         = optional(string)<br>    identity_ids = optional(list(string))<br>  })</pre> | `{}` | no |
 | <a name="input_ip_configurations"></a> [ip\_configurations](#input\_ip\_configurations) | List of IP configurations | <pre>list(object({<br>    name                          = string<br>    subnet_id                     = string<br>    private_ip_address_allocation = string<br>    private_ip_address            = optional(string)<br>    public_ip_address_id          = optional(string)<br>    primary                       = optional(bool)<br>  }))</pre> | n/a | yes |
 | <a name="input_license_type"></a> [license\_type](#input\_license\_type) | Specifies the BYOL license type. | `string` | `null` | no |
 | <a name="input_location"></a> [location](#input\_location) | The Azure region to deploy the resources in. | `string` | n/a | yes |
+| <a name="input_log_analytics_destination_type"></a> [log\_analytics\_destination\_type](#input\_log\_analytics\_destination\_type) | When set to 'Dedicated' logs sent to a Log Analytics workspace will go into resource specific tables, instead of the legacy AzureDiagnostics table. | `string` | `"AzureDiagnostics"` | no |
+| <a name="input_log_categories"></a> [log\_categories](#input\_log\_categories) | List of log categories. Defaults to all available. | `list(string)` | `null` | no |
+| <a name="input_logs_destinations_ids"></a> [logs\_destinations\_ids](#input\_logs\_destinations\_ids) | List of destination resources IDs for logs diagnostic destination.<br>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br>If you want to use Azure EventHub as a destination, you must provide a formatted string containing both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the <code>&#124;</code> character. | `list(string)` | n/a | yes |
+| <a name="input_metric_categories"></a> [metric\_categories](#input\_metric\_categories) | List of metric categories. Defaults to all available. | `list(string)` | `null` | no |
 | <a name="input_network_interface_id"></a> [network\_interface\_id](#input\_network\_interface\_id) | ID of the NIC to associate with the VM. | `string` | n/a | yes |
 | <a name="input_network_interface_name"></a> [network\_interface\_name](#input\_network\_interface\_name) | Name for the network interface to be created | `string` | n/a | yes |
 | <a name="input_os_disk_caching"></a> [os\_disk\_caching](#input\_os\_disk\_caching) | Caching setting for the OS disk. | `string` | `"ReadWrite"` | no |
@@ -154,4 +160,6 @@ hotpatching_enabled     = false
 patch_mode              = "AutomaticByPlatform"
 patching_reboot_setting = "Always"
 
+# Diagnostics
+enable_diagnostics             = true
 ```
