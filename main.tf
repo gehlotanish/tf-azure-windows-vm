@@ -39,7 +39,7 @@ resource "azurerm_windows_virtual_machine" "win_vm" {
   name                                                   = var.vm_name
   location                                               = var.location
   resource_group_name                                    = var.resource_group_name
-  network_interface_ids                                  = [var.network_interface_id]
+  network_interface_ids                                  = concat([azurerm_network_interface.main.id], var.additional_network_interface_ids)
   size                                                   = var.vm_size
   license_type                                           = var.license_type
   source_image_id                                        = var.vm_image_id

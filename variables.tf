@@ -18,11 +18,6 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "network_interface_id" {
-  description = "ID of the NIC to associate with the VM."
-  type        = string
-}
-
 variable "vm_size" {
   description = "The size of the virtual machine."
   type        = string
@@ -324,4 +319,10 @@ variable "log_analytics_destination_type" {
   type        = string
   default     = "AzureDiagnostics"
   description = "When set to 'Dedicated' logs sent to a Log Analytics workspace will go into resource specific tables, instead of the legacy AzureDiagnostics table."
+}
+
+variable "additional_network_interface_ids" {
+  description = "Optional list of additional network interface IDs to attach to the VM"
+  type        = list(string)
+  default     = []
 }
