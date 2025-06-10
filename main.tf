@@ -66,8 +66,11 @@ resource "azurerm_windows_virtual_machine" "win_vm" {
   eviction_policy                                        = var.spot_instance_enabled ? var.spot_instance_eviction_policy : null
   tags                                                   = var.tags
 
-  boot_diagnostics {
-    storage_account_uri = "https://${var.diagnostics_storage_account_name}.blob.core.windows.net"
+  dynamic "boot_diagnostics" {
+    for_each = var.diagnostics_storage_account_name != null ? [1] : []
+    content {
+      storage_account_uri = "https://${var.diagnostics_storage_account_name}.blob.core.windows.net"
+    }
   }
 
   os_disk {

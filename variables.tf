@@ -6,6 +6,7 @@ variable "vm_name" {
 variable "compute_name" {
   description = "The computer name assigned inside the OS."
   type        = string
+  default     = "localhost"
 }
 
 variable "location" {
@@ -144,6 +145,7 @@ variable "spot_instance_eviction_policy" {
 variable "diagnostics_storage_account_name" {
   description = "Storage account for boot diagnostics."
   type        = string
+  default     = null
 }
 
 variable "os_disk_name" {
@@ -307,7 +309,7 @@ variable "metric_categories" {
 
 variable "logs_destinations_ids" {
   type        = list(string)
-  nullable    = false
+  default     = []
   description = <<EOD
 List of destination resources IDs for logs diagnostic destination.
 Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.
