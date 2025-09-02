@@ -101,17 +101,14 @@ resource "azurerm_windows_virtual_machine" "win_vm" {
   }
 
   dynamic "identity" {
-    for_each = var.azure_monitor_agent_user_assigned_identity != null || try(var.identity.type == "UserAssigned", false) ? [1] : []
+    for_each = var.identity != null ? [1] : []
     content {
-      type = join(", ", toset(compact([
-        "UserAssigned",
-        try(var.identity.type, "")
-      ])))
+      type = var.identity.type
 
-      identity_ids = compact(concat(
+      identity_ids = var.identity.type == "UserAssigned" ? compact(concat(
         try(var.identity.identity_ids, []),
         [var.azure_monitor_agent_user_assigned_identity]
-      ))
+      )) : []
     }
   }
 
