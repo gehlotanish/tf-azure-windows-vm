@@ -1,6 +1,6 @@
 locals {
   log_categories = var.enable_diagnostics ? [
-    for log in (
+    for log in(
       var.log_categories != null ?
       var.log_categories :
       try(data.azurerm_monitor_diagnostic_categories.main[0].log_category_types, [])
