@@ -26,14 +26,21 @@ No modules.
 | <a name="input_availability_set_id"></a> [availability\_set\_id](#input\_availability\_set\_id) | ID of the availability set, if any. | `string` | `null` | no |
 | <a name="input_azure_monitor_agent_user_assigned_identity"></a> [azure\_monitor\_agent\_user\_assigned\_identity](#input\_azure\_monitor\_agent\_user\_assigned\_identity) | User-assigned identity used by Azure Monitor Agent. | `string` | `null` | no |
 | <a name="input_compute_name"></a> [compute\_name](#input\_compute\_name) | The computer name assigned inside the OS. | `string` | `"localhost"` | no |
+| <a name="input_crowdstrike_falcon_client_id"></a> [crowdstrike\_falcon\_client\_id](#input\_crowdstrike\_falcon\_client\_id) | CrowdStrike API Client ID | `string` | `null` | no |
+| <a name="input_crowdstrike_falcon_client_secret"></a> [crowdstrike\_falcon\_client\_secret](#input\_crowdstrike\_falcon\_client\_secret) | CrowdStrike API Client Secret | `string` | `null` | no |
+| <a name="input_crowdstrike_falcon_cloud"></a> [crowdstrike\_falcon\_cloud](#input\_crowdstrike\_falcon\_cloud) | CrowdStrike cloud region (us-1, us-2, eu-1, us-gov-1, autodiscover) | `string` | `"autodiscover"` | no |
+| <a name="input_crowdstrike_falcon_tags"></a> [crowdstrike\_falcon\_tags](#input\_crowdstrike\_falcon\_tags) | Optional tags to assign to the sensor (comma-separated) | `string` | `null` | no |
 | <a name="input_custom_dns_label"></a> [custom\_dns\_label](#input\_custom\_dns\_label) | Custom DNS label for the public IP | `string` | `""` | no |
 | <a name="input_diagnostics_storage_account_name"></a> [diagnostics\_storage\_account\_name](#input\_diagnostics\_storage\_account\_name) | Storage account for boot diagnostics. | `string` | `null` | no |
 | <a name="input_disk_controller_type"></a> [disk\_controller\_type](#input\_disk\_controller\_type) | The type of disk controller to use. | `string` | `"SCSI"` | no |
 | <a name="input_disk_encryption_set_id"></a> [disk\_encryption\_set\_id](#input\_disk\_encryption\_set\_id) | ID of the disk encryption set. | `string` | `null` | no |
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | List of DNS servers | `list(string)` | `[]` | no |
+| <a name="input_enable_aad_login_extension"></a> [enable\_aad\_login\_extension](#input\_enable\_aad\_login\_extension) | Enable the AAD Login extension for Windows VM | `bool` | `false` | no |
 | <a name="input_enable_accelerated_networking"></a> [enable\_accelerated\_networking](#input\_enable\_accelerated\_networking) | Enable accelerated networking | `bool` | `false` | no |
+| <a name="input_enable_crowdstrike_falcon_extension"></a> [enable\_crowdstrike\_falcon\_extension](#input\_enable\_crowdstrike\_falcon\_extension) | Enable the CrowdStrike Falcon Sensor Windows VM extension | `bool` | `false` | no |
 | <a name="input_enable_diagnostics"></a> [enable\_diagnostics](#input\_enable\_diagnostics) | Enable diagnostic settings for the VM | `bool` | `false` | no |
 | <a name="input_enable_ip_forwarding"></a> [enable\_ip\_forwarding](#input\_enable\_ip\_forwarding) | Whether IP forwarding is enabled | `bool` | `false` | no |
+| <a name="input_enable_windows_custom_script_extension"></a> [enable\_windows\_custom\_script\_extension](#input\_enable\_windows\_custom\_script\_extension) | Enable the Windows Custom Script Extension | `bool` | `false` | no |
 | <a name="input_encryption_at_host_enabled"></a> [encryption\_at\_host\_enabled](#input\_encryption\_at\_host\_enabled) | Enable encryption at host. | `bool` | `false` | no |
 | <a name="input_excluded_log_categories"></a> [excluded\_log\_categories](#input\_excluded\_log\_categories) | List of log categories to exclude. | `list(string)` | `[]` | no |
 | <a name="input_hotpatching_enabled"></a> [hotpatching\_enabled](#input\_hotpatching\_enabled) | Enable hotpatching on supported images. | `bool` | `false` | no |
@@ -70,6 +77,8 @@ No modules.
 | <a name="input_vm_plan"></a> [vm\_plan](#input\_vm\_plan) | VM purchase plan for marketplace images. | <pre>object({<br/>    name      = string<br/>    product   = string<br/>    publisher = string<br/>  })</pre> | `null` | no |
 | <a name="input_vm_size"></a> [vm\_size](#input\_vm\_size) | The size of the virtual machine. | `string` | n/a | yes |
 | <a name="input_vtpm_enabled"></a> [vtpm\_enabled](#input\_vtpm\_enabled) | Enable virtual TPM. | `bool` | `false` | no |
+| <a name="input_windows_custom_script_command"></a> [windows\_custom\_script\_command](#input\_windows\_custom\_script\_command) | Command to execute (e.g., powershell -ExecutionPolicy Bypass -File script.ps1) | `string` | `null` | no |
+| <a name="input_windows_custom_script_file_uris"></a> [windows\_custom\_script\_file\_uris](#input\_windows\_custom\_script\_file\_uris) | List of file URIs (e.g., SAS URLs) to download for the custom script extension | `list(string)` | `[]` | no |
 | <a name="input_zone_id"></a> [zone\_id](#input\_zone\_id) | The availability zone to use. | `string` | `null` | no |  
 ## Outputs
 
@@ -161,5 +170,20 @@ patch_mode              = "AutomaticByPlatform"
 patching_reboot_setting = "Always"
 
 # Diagnostics
-enable_diagnostics             = true
+enable_diagnostics             = false
+
+# AAD Login Extension
+enable_aad_login_extension = false
+
+# CrowdStrike Falcon Extension
+enable_crowdstrike_falcon_extension = false
+crowdstrike_falcon_cloud            = "autodiscover"
+crowdstrike_falcon_tags             = ""
+crowdstrike_falcon_client_id        = null
+crowdstrike_falcon_client_secret    = null
+
+# Windows Custom Script Extension
+enable_windows_custom_script_extension = false
+windows_custom_script_file_uris        = []
+windows_custom_script_command          = null
 ```

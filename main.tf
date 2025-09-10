@@ -176,6 +176,7 @@ resource "azurerm_monitor_diagnostic_setting" "win_vm" {
 
 
 resource "azurerm_virtual_machine_extension" "aad_login_windows" {
+  count                      = var.enable_aad_login_extension ? 1 : 0
   name                       = "AADLoginForWindows"
   virtual_machine_id         = azurerm_windows_virtual_machine.win_vm.id
   publisher                  = "Microsoft.Azure.ActiveDirectory"
@@ -184,3 +185,41 @@ resource "azurerm_virtual_machine_extension" "aad_login_windows" {
   auto_upgrade_minor_version = true
   tags                       = var.tags
 }
+
+resource "azurerm_virtual_machine_extension" "crowdstrike_falcon_windows" {
+  count                      = var.enable_crowdstrike_falcon_extension ? 1 : 0
+  name                       = "CrowdStrikeFalconSensorWindows"
+  virtual_machine_id         = azurerm_windows_virtual_machine.win_vm.id
+  publisher                  = "Crowdstrike.Falcon"
+  type                       = "FalconSensorWindows"
+  type_handler_version       = "1.0"
+  auto_upgrade_minor_version = true
+  tags                       = var.tags
+
+  settings = jsonencode({
+    cloud = var.crowdstrike_falcon_cloud
+    tags  = var.crowdstrike_falcon_tags
+  })
+
+  protected_settings = (var.crowdstrike_falcon_client_id != null && var.crowdstrike_falcon_client_secret != null) ? jsonencode({
+    client_id     = var.crowdstrike_falcon_client_id
+    client_secret = var.crowdstrike_falcon_client_secret
+  }) : null
+}
+
+resource "azurerm_virtual_machine_extension" "windows_custom_script" {
+  count                      = var.enable_windows_custom_script_extension ? 1 : 0
+  name                       = "WindowsCustomScript"
+  virtual_machine_id         = azurerm_windows_virtual_machine.win_vm.id
+  publisher                  = "Microsoft.Azure.Extensions"
+  type                       = "CustomScript"
+  type_handler_version       = "2.0"
+  auto_upgrade_minor_version = true
+  tags                       = var.tags
+
+  settings = jsonencode({
+    fileUris         = var.windows_custom_script_file_uris
+    commandToExecute = var.windows_custom_script_command
+  })
+}
+

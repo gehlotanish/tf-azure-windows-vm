@@ -328,3 +328,59 @@ variable "additional_network_interface_ids" {
   type        = list(string)
   default     = []
 }
+
+variable "enable_aad_login_extension" {
+  description = "Enable the AAD Login extension for Windows VM"
+  type        = bool
+  default     = false
+}
+
+variable "enable_crowdstrike_falcon_extension" {
+  description = "Enable the CrowdStrike Falcon Sensor Windows VM extension"
+  type        = bool
+  default     = false
+}
+
+variable "crowdstrike_falcon_tags" {
+  description = "Optional tags to assign to the sensor (comma-separated)"
+  type        = string
+  default     = null
+}
+
+variable "crowdstrike_falcon_cloud" {
+  description = "CrowdStrike cloud region (us-1, us-2, eu-1, us-gov-1, autodiscover)"
+  type        = string
+  default     = "autodiscover"
+}
+
+variable "crowdstrike_falcon_client_id" {
+  description = "CrowdStrike API Client ID"
+  type        = string
+  sensitive   = true
+  default     = null
+}
+
+variable "crowdstrike_falcon_client_secret" {
+  description = "CrowdStrike API Client Secret"
+  type        = string
+  sensitive   = true
+  default     = null
+}
+
+variable "enable_windows_custom_script_extension" {
+  description = "Enable the Windows Custom Script Extension"
+  type        = bool
+  default     = false
+}
+
+variable "windows_custom_script_file_uris" {
+  description = "List of file URIs (e.g., SAS URLs) to download for the custom script extension"
+  type        = list(string)
+  default     = []
+}
+
+variable "windows_custom_script_command" {
+  description = "Command to execute (e.g., powershell -ExecutionPolicy Bypass -File script.ps1)"
+  type        = string
+  default     = null
+}
