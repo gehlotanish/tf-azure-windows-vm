@@ -23,6 +23,8 @@ No modules.
 | <a name="input_additional_network_interface_ids"></a> [additional\_network\_interface\_ids](#input\_additional\_network\_interface\_ids) | Optional list of additional network interface IDs to attach to the VM | `list(string)` | `[]` | no |
 | <a name="input_admin_password"></a> [admin\_password](#input\_admin\_password) | The admin password for the VM. | `string` | n/a | yes |
 | <a name="input_admin_username"></a> [admin\_username](#input\_admin\_username) | The admin username for the VM. | `string` | n/a | yes |
+| <a name="input_agency_dc_config"></a> [agency\_dc\_config](#input\_agency\_dc\_config) | Configuration for agency domain controller join | <pre>object({<br/>    domain_name = string<br/>    ou_path     = string<br/>    username    = string<br/>    password    = string<br/>  })</pre> | <pre>{<br/>  "domain_name": "",<br/>  "ou_path": "",<br/>  "password": "",<br/>  "username": ""<br/>}</pre> | no |
+| <a name="input_auto_shutdown_time"></a> [auto\_shutdown\_time](#input\_auto\_shutdown\_time) | Time for daily auto-shutdown (format: HHMM, e.g., 1800 for 6:00 PM) | `string` | `"1800"` | no |
 | <a name="input_availability_set_id"></a> [availability\_set\_id](#input\_availability\_set\_id) | ID of the availability set, if any. | `string` | `null` | no |
 | <a name="input_azure_monitor_agent_user_assigned_identity"></a> [azure\_monitor\_agent\_user\_assigned\_identity](#input\_azure\_monitor\_agent\_user\_assigned\_identity) | User-assigned identity used by Azure Monitor Agent. | `string` | `null` | no |
 | <a name="input_compute_name"></a> [compute\_name](#input\_compute\_name) | The computer name assigned inside the OS. | `string` | `"localhost"` | no |
@@ -37,9 +39,12 @@ No modules.
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | List of DNS servers | `list(string)` | `[]` | no |
 | <a name="input_enable_aad_login_extension"></a> [enable\_aad\_login\_extension](#input\_enable\_aad\_login\_extension) | Enable the AAD Login extension for Windows VM | `bool` | `false` | no |
 | <a name="input_enable_accelerated_networking"></a> [enable\_accelerated\_networking](#input\_enable\_accelerated\_networking) | Enable accelerated networking | `bool` | `false` | no |
+| <a name="input_enable_agency_dc"></a> [enable\_agency\_dc](#input\_enable\_agency\_dc) | Enable domain join to agency domain controller | `bool` | `false` | no |
+| <a name="input_enable_autoshut_down"></a> [enable\_autoshut\_down](#input\_enable\_autoshut\_down) | Enable auto-shutdown schedule for the VM | `bool` | `false` | no |
 | <a name="input_enable_crowdstrike_falcon_extension"></a> [enable\_crowdstrike\_falcon\_extension](#input\_enable\_crowdstrike\_falcon\_extension) | Enable the CrowdStrike Falcon Sensor Windows VM extension | `bool` | `false` | no |
 | <a name="input_enable_diagnostics"></a> [enable\_diagnostics](#input\_enable\_diagnostics) | Enable diagnostic settings for the VM | `bool` | `false` | no |
 | <a name="input_enable_ip_forwarding"></a> [enable\_ip\_forwarding](#input\_enable\_ip\_forwarding) | Whether IP forwarding is enabled | `bool` | `false` | no |
+| <a name="input_enable_transit_dc"></a> [enable\_transit\_dc](#input\_enable\_transit\_dc) | Enable domain join to transit domain controller | `bool` | `false` | no |
 | <a name="input_enable_windows_custom_script_extension"></a> [enable\_windows\_custom\_script\_extension](#input\_enable\_windows\_custom\_script\_extension) | Enable the Windows Custom Script Extension | `bool` | `false` | no |
 | <a name="input_encryption_at_host_enabled"></a> [encryption\_at\_host\_enabled](#input\_encryption\_at\_host\_enabled) | Enable encryption at host. | `bool` | `false` | no |
 | <a name="input_excluded_log_categories"></a> [excluded\_log\_categories](#input\_excluded\_log\_categories) | List of log categories to exclude. | `list(string)` | `[]` | no |
@@ -68,6 +73,8 @@ No modules.
 | <a name="input_spot_instance_max_bid_price"></a> [spot\_instance\_max\_bid\_price](#input\_spot\_instance\_max\_bid\_price) | Max bid price for spot instance. | `number` | `null` | no |
 | <a name="input_storage_data_disk_config"></a> [storage\_data\_disk\_config](#input\_storage\_data\_disk\_config) | Map of configurations for additional data disks. | <pre>map(object({<br/>    name                 = optional(string)<br/>    lun                  = optional(number)<br/>    caching              = string<br/>    create_option        = string<br/>    disk_size_gb         = number<br/>    source_resource_id   = optional(string)<br/>    storage_account_type = string<br/>    extra_tags           = optional(map(string))<br/>    zone                 = optional(string)<br/>  }))</pre> | `{}` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to assign to the resources. | `map(string)` | `{}` | no |
+| <a name="input_time_zone"></a> [time\_zone](#input\_time\_zone) | Timezone for the auto-shutdown schedule | `string` | `"UTC"` | no |
+| <a name="input_transit_dc_config"></a> [transit\_dc\_config](#input\_transit\_dc\_config) | Configuration for transit domain controller join | <pre>object({<br/>    domain_name = string<br/>    ou_path     = string<br/>    username    = string<br/>    password    = string<br/>  })</pre> | <pre>{<br/>  "domain_name": "",<br/>  "ou_path": "",<br/>  "password": "",<br/>  "username": ""<br/>}</pre> | no |
 | <a name="input_ultra_ssd_enabled"></a> [ultra\_ssd\_enabled](#input\_ultra\_ssd\_enabled) | Enable Ultra SSD capability. | `bool` | `false` | no |
 | <a name="input_user_data"></a> [user\_data](#input\_user\_data) | Cloud-init or custom data script. | `string` | `null` | no |
 | <a name="input_vm_agent_platform_updates_enabled"></a> [vm\_agent\_platform\_updates\_enabled](#input\_vm\_agent\_platform\_updates\_enabled) | Enable VM guest agent platform updates. | `bool` | `false` | no |

@@ -223,3 +223,68 @@ resource "azurerm_virtual_machine_extension" "windows_custom_script" {
   })
 }
 
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "auto_shutdown" {
+  count = var.enable_autoshut_down ? 1 : 0
+
+  virtual_machine_id = azurerm_windows_virtual_machine.win_vm.id
+  location           = azurerm_windows_virtual_machine.win_vm.location
+  enabled            = true
+
+  daily_recurrence_time = var.auto_shutdown_time
+  timezone              = var.time_zone
+
+  notification_settings {
+    enabled = false
+  }
+  tags = var.tags
+}
+
+resource "azurerm_virtual_machine_extension" "agency_domjoin" {
+  count = var.enable_agency_dc ? 1 : 0
+
+  name                       = "AgencyDomainJoin"
+  virtual_machine_id         = azurerm_windows_virtual_machine.win_vm.id
+  publisher                  = "Microsoft.Compute"
+  type                       = "JsonADDomainExtension"
+  type_handler_version       = "1.3"
+  auto_upgrade_minor_version = true
+  tags                       = var.tags
+
+  settings = jsonencode({
+    Name    = var.agency_dc_config.domain_name
+    OUPath  = var.agency_dc_config.ou_path
+    User    = var.agency_dc_config.username
+    Restart = "true"
+    Options = "3"
+  })
+
+  protected_settings = jsonencode({
+    Password = var.agency_dc_config.password
+  })
+}
+
+resource "azurerm_virtual_machine_extension" "transit_domjoin" {
+  count = var.enable_transit_dc ? 1 : 0
+
+  name                       = "TransitDomainJoin"
+  virtual_machine_id         = azurerm_windows_virtual_machine.win_vm.id
+  publisher                  = "Microsoft.Compute"
+  type                       = "JsonADDomainExtension"
+  type_handler_version       = "1.3"
+  auto_upgrade_minor_version = true
+  tags                       = var.tags
+
+  settings = jsonencode({
+    Name    = var.transit_dc_config.domain_name
+    OUPath  = var.transit_dc_config.ou_path
+    User    = var.transit_dc_config.username
+    Restart = "true"
+    Options = "3"
+  })
+
+  protected_settings = jsonencode({
+    Password = var.transit_dc_config.password
+  })
+}
+
+

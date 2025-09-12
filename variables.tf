@@ -384,3 +384,65 @@ variable "windows_custom_script_command" {
   type        = string
   default     = null
 }
+
+variable "enable_autoshut_down" {
+  description = "Enable auto-shutdown schedule for the VM"
+  type        = bool
+  default     = false
+}
+
+variable "auto_shutdown_time" {
+  description = "Time for daily auto-shutdown (format: HHMM, e.g., 1800 for 6:00 PM)"
+  type        = string
+  default     = "1800"
+}
+
+variable "time_zone" {
+  description = "Timezone for the auto-shutdown schedule"
+  type        = string
+  default     = "UTC"
+}
+
+variable "enable_agency_dc" {
+  description = "Enable domain join to agency domain controller"
+  type        = bool
+  default     = false
+}
+
+variable "enable_transit_dc" {
+  description = "Enable domain join to transit domain controller"
+  type        = bool
+  default     = false
+}
+
+variable "agency_dc_config" {
+  description = "Configuration for agency domain controller join"
+  type = object({
+    domain_name = string
+    ou_path     = string
+    username    = string
+    password    = string
+  })
+  default = {
+    domain_name = ""
+    ou_path     = ""
+    username    = ""
+    password    = ""
+  }
+}
+
+variable "transit_dc_config" {
+  description = "Configuration for transit domain controller join"
+  type = object({
+    domain_name = string
+    ou_path     = string
+    username    = string
+    password    = string
+  })
+  default = {
+    domain_name = ""
+    ou_path     = ""
+    username    = ""
+    password    = ""
+  }
+}
