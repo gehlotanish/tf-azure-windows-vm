@@ -193,4 +193,28 @@ crowdstrike_falcon_client_secret    = null
 enable_windows_custom_script_extension = false
 windows_custom_script_file_uris        = []
 windows_custom_script_command          = null
+
+# For AutoShut Down
+enable_autoshut_down = true
+auto_shutdown_time   = "1800"  # 6:00 PM
+time_zone           = "UTC"
+
+# For Agency DC
+enable_agency_dc = true
+agency_dc_config = {
+  domain_name = "agency.domain.com"
+  ou_path     = "OU=Servers,DC=agency,DC=domain,DC=com"
+  username    = "agency\\admin_user"
+  password    = "your_password_here"
+}
+
+# For Transit DC
+enable_transit_dc = true
+transit_dc_config = {
+  domain_name = "transit.domain.com"
+  ou_path     = "OU=Servers,DC=transit,DC=domain,DC=com"
+  username    = "transit\\admin_user"
+  password    = "your_password_here"
+}
+
 ```
